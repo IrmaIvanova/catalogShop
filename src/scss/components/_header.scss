@@ -1,6 +1,6 @@
 .header {
     padding: 44px 0 85px;
-    background-color: $white;
+ 
     @include flex-center;
 
     @include mobile-only {

@@ -6,7 +6,7 @@ const coursesData = [
         price: 100,
         instructor: "Jerome Bell",
         category: "Marketing",
-        image: "course1.png"
+        image: "course1.webp"
     },
     {
         id: 2,
@@ -14,7 +14,7 @@ const coursesData = [
         price: 400,
         instructor: "Miriam McGoney",
         category: "Management",
-        image: "course2.png"
+        image: "course2.webp"
     },
     {
         id: 3,
@@ -22,7 +22,7 @@ const coursesData = [
         price: 200,
         instructor: "Leslie Alexander",
         category: "HR & Recruting",
-        image: "course3.png"
+        image: "course3.webp"
     },
     {
         id: 4,
@@ -30,7 +30,7 @@ const coursesData = [
         price: 250,
         instructor: "Kristin Watson",
         category: "Marketing",
-        image: "course4.png"
+        image: "course4.webp"
     },
     {
         id: 5,
@@ -38,7 +38,7 @@ const coursesData = [
         price: 600,
         instructor: "Guy Hawkins",
         category: "Design",
-        image: "course5.png"
+        image: "course5.webp"
     },
     {
         id: 6,
@@ -46,7 +46,7 @@ const coursesData = [
         price: 400,
         instructor: "Diane Russell",
         category: "Management",
-        image: "course6.png"
+        image: "course6.webp"
     },
     {
         id: 7,
@@ -54,7 +54,7 @@ const coursesData = [
         price: 400,
         instructor: "Brooklyn Stirnman",
         category: "Development",
-        image: "course7.png"
+        image: "course7.webp"
     },
     {
         id: 8,
@@ -62,7 +62,7 @@ const coursesData = [
         price: 150,
         instructor: "Kathryn Murphy",
         category: "HR & Recruting",
-        image: "course8.png"
+        image: "course8.webp"
     },
     {
         id: 9,
@@ -70,7 +70,7 @@ const coursesData = [
         price: 240,
         instructor: "Cody Flover",
         category: "Design",
-        image: "course9.png"
+        image: "course9.webp"
     }
 ];
 
@@ -88,7 +88,7 @@ const categories = [
 let coursesGrid = document.getElementById('courses-grid');
 let filtersList = document.querySelector('.filters__list');
 let searchInput = document.querySelector('.search__input');
-
+let categoryCounts = {};
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     initCategories();
@@ -96,20 +96,50 @@ document.addEventListener('DOMContentLoaded', () => {
     setupEventListeners();
 });
 
+
+function calculateCategoryCounts() {
+    // Инициализируем объект с нулями
+    categoryCounts = {};
+
+    // Для категории "All" считаем все курсы
+    categoryCounts["All"] = coursesData.length;
+
+    // Для остальных категорий
+    categories.forEach(category => {
+        if (category !== "All") {
+            // Считаем сколько курсов в этой категории
+            const count = coursesData.filter(course => course.category === category).length;
+            categoryCounts[category] = count;
+        }
+    });
+}
+   
+calculateCategoryCounts()
 // Инициализация категорий
 function initCategories() {
     const filtersList = document.getElementById('filtersList');
 
+    // Очищаем список
+    filtersList.innerHTML = '';
+
     categories.forEach((category, index) => {
+        // Получаем количество для этой категории
+        const count = categoryCounts[category] || 0;
+
         const button = document.createElement('button');
         button.className = index === 0 ? 'filter__button filter__button--active' : 'filter__button';
-        button.textContent = category;
+
+        // Добавляем счётчик в текст кнопки
+        button.innerHTML = `${category} <span class="filter__button--count">${count}</span>`;
+
         button.dataset.category = category;
         button.type = 'button';
-        button.setAttribute('aria-label', `Filter by ${category}`);
+        button.setAttribute('aria-label', `Filter by ${category} - ${count} courses`);
         filtersList.appendChild(button);
     });
 }
+
+
 // Рендер карточек курсов
 function renderCourses(courses) {
     const coursesGrid = document.getElementById('coursesGrid');

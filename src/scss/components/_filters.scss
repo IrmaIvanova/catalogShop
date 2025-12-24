@@ -23,7 +23,7 @@
     &__button {
         padding: $spacing-xs $spacing-md;
         border: none;
-
+        position: relative;
         background-color: $white;
         font-family: $font-primary;
         @include font-button;
@@ -48,6 +48,18 @@
         @include mobile-only {
             padding: $spacing-xs $spacing-md;
             font-size: 14px;
+        }
+
+        &--count {
+            font-size: 10px;
+            font-weight: $font-weight-900;
+            position: relative;
+            top: -10px;
+            padding-left: 4px;
+
+            .filter__button--active & {
+                opacity: 0.9;
+            }
         }
     }
 }
