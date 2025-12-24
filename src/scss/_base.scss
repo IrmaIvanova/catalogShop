@@ -1,0 +1,25 @@
+// Базовые стили
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-primary;
+  color: $black;
+  background-color: $white;
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}

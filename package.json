@@ -1,0 +1,22 @@
+{
+  "name": "catalogshop",
+  "version": "1.0.0",
+  "description": "Каталог товаров с фильтрацией",
+  "main": "index.js",
+  "scripts": {
+    "build:css": "sass src/scss:dist/css --style compressed",
+    "watch:css": "sass --watch src/scss:dist/css",
+    "copy:html": "cp src/index.html dist/index.html",
+    "copy:js": "cp -r src/js/ dist/js/",
+    "copy:images": "cp -r src/images/ dist/images/",
+    "build": "npm run build:css && npm run copy:html && npm run copy:js && npm run copy:images",
+    "dev": "npm run build && live-server dist",
+    "start": "npm run dev"
+  },
+  "devDependencies": {
+    "sass": "^1.77.0"
+  },
+  "keywords": ["catalog", "vanilla-js", "scss"],
+  "author": "Ваше имя",
+  "license": "MIT"
+}

@@ -1,0 +1,25 @@
+// Миксины для адаптива
+@mixin for-phone-only {
+  @media (max-width: 767px) { @content; }
+}
+
+@mixin for-tablet-up {
+  @media (min-width: 768px) { @content; }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: 1024px) { @content; }
+}
+
+// Flex миксины
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
