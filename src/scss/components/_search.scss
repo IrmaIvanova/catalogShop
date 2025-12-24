@@ -1,3 +1,7 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+@use "sass:color";
+
 .search {
   margin: $spacing-xl 0;
   position: relative;
@@ -22,7 +26,7 @@
 
     &:focus {
       outline: none;
-      border-color: darken($primary-button, 10%);
+      border-color:  color.scale($primary-button, $lightness: -10%);
     }
 
     &::placeholder {
@@ -43,9 +47,7 @@
     color: $primary-button;
     @include transition(color);
 
-    // &:hover {
-    //   color: darken($primary-button, 10%);
-    // }
+ 
 
     &:focus {
       outline: none;

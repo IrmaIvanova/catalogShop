@@ -1,16 +1,12 @@
 // Основной файл стилей
-// Импорты
-@import 'variables';
-@import 'mixins';
-@import 'base';
 
-// Компоненты
-@import 'components/header';
-@import 'components/search';
-@import 'components/filters';
-@import 'components/cards';
-@import 'components/card';
-// @import 'components/footer';
 
-// Утилиты
-@import 'utilities';
+@use 'variables';
+@use 'mixins';
+@use 'base';
+@use 'utilities';
+@use 'components/header';
+@use 'components/search';
+@use 'components/filters';
+@use 'components/cards';
+@use 'components/card';
