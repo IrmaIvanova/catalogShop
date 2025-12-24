@@ -1,14 +1,62 @@
-// Цвета из макета
-$primary-purple: #4F27BF;
+// Цвета из Figma
+$primary-gray: #1E212C;
+$primary-active: #FF3F3A;
+$primary-price: #FF4242;
+$primary-button: #9A9CA5;
+$primary-instructor: #787A80;
 $white: #FFFFFF;
 $black: #1C1C1E;
-$gray-light: #F8F8F8;
-$gray-medium: #E5E5E5;
-$gray-dark: #6C6C6C;
+$gray-bg: #F8F8F8;
+$gray-border: #E5E5E5;
+$gray-text: #6C6C6C;
+$gray-dark: #1C1C1E;
+
+
+$cat-marketing: #03CEA4;
+$cat-development: #7772F1;
+$cat-management: #5A87FC;
+$cat-hr: #F89828;
+$cat-design: #F52F6E;
+
+
+// Цвета кнопок
+// $button-active: $primary-gray;
+// $button-inactive: $white;
+
+// Тени
+$shadow-card: 0px 4px 12px rgba(0, 0, 0, 0.05);
+$shadow-button: 0px 4px 8px rgba(0, 0, 0, 0.1);
 
 // Шрифты
-$font-primary: 'Montserrat', sans-serif;
+$font-primary: 'Lato', sans-serif;
+// $font-weight-regular
+$font-weight-400: 400;
+// $font-weight-medium: 500;
+$font-weight-500: 500;
+// $font-weight-semibold: 600;
+$font-weight-600: 600;
+// $font-weight-bold: 700;
+$font-weight-700: 700;
+// $font-weight-700: 700;
+$font-weight-900: 900;
+
+// Размеры
+$container-max-width: 1440px;
+$container-padding: 80px;
+
+$card-border-radius: 4px;
+$button-border-radius: 4px;
+
+// Брейкпоинты
+$mobile: 375px;
+$tablet: 768px;
+$desktop: 1024px;
+$wide: 1440px;
 
 // Отступы
-$container-padding: 20px;
-$card-gap: 24px;
+$spacing-xs: 10px;
+$spacing-sm: 12px;
+$spacing-md: 20px;
+$spacing-lg: 30px;
+$spacing-xl: 48px;
+$spacing-xxl: 60px;

@@ -1,17 +1,29 @@
-// Миксины для адаптива
-@mixin for-phone-only {
-  @media (max-width: 767px) { @content; }
+// Медиа-запросы
+@mixin mobile-only {
+  @media (max-width: #{$tablet - 1px}) {
+    @content;
+  }
 }
 
-@mixin for-tablet-up {
-  @media (min-width: 768px) { @content; }
+@mixin tablet {
+  @media (min-width: #{$tablet}) {
+    @content;
+  }
 }
 
-@mixin for-desktop-up {
-  @media (min-width: 1024px) { @content; }
+@mixin desktop {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
 }
 
-// Flex миксины
+@mixin wide {
+  @media (min-width: #{$wide}) {
+    @content;
+  }
+}
+
+// Flexbox миксины
 @mixin flex-center {
   display: flex;
   align-items: center;
@@ -22,4 +34,74 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+// Typography миксины
+@mixin font-h1 {
+  font-size: 46px;
+  font-weight: $font-weight-900;
+  line-height: 130%;
+  
+  @include mobile-only {
+    font-size: 28px;
+  }
+}
+
+@mixin font-h2 {
+  font-size: 20px;
+  font-weight: $font-weight-700;
+  line-height: 150%;
+  
+  @include mobile-only {
+    font-size: 18px;
+  }
+}
+
+@mixin font-h6 {
+  font-size: 16px;
+  font-weight: $font-weight-700;
+  line-height: 150%;
+  
+  @include mobile-only {
+    font-size: 16px;
+  }
+}
+
+@mixin font-body {
+  font-size: 16px;
+  font-weight: $font-weight-400;
+  line-height: 1.5;
+}
+
+@mixin font-small {
+  font-size: 14px;
+  font-weight: $font-weight-400;
+  line-height: 150%;
+}
+
+@mixin font-button {
+  font-size: 16px;
+  font-weight: $font-weight-700;
+  color: $primary-button;
+  line-height: 160%;
+}
+
+// Эффекты
+@mixin transition($property: all, $duration: 0.3s) {
+  transition: $property $duration ease;
+}
+
+@mixin hover-effect {
+  @include transition;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: $shadow-button;
+  }
 }

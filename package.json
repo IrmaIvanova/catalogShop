@@ -7,8 +7,8 @@
     "build:css": "sass src/scss:dist/css --style compressed",
     "watch:css": "sass --watch src/scss:dist/css",
     "copy:html": "cp src/index.html dist/index.html",
-    "copy:js": "cp -r src/js/ dist/js/",
-    "copy:images": "cp -r src/images/ dist/images/",
+    "copy:js": "cp -r src/js/ dist/",
+    "copy:images": "cp -r src/images/ dist/",
     "build": "npm run build:css && npm run copy:html && npm run copy:js && npm run copy:images",
     "dev": "npm run build && live-server dist",
     "start": "npm run dev"

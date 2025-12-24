@@ -1,25 +1,73 @@
-// Базовые стили
+// Сброс и базовые стили
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
-  font-family: $font-primary;
-  color: $black;
-  background-color: $white;
-  line-height: 1.5;
+    font-family: $font-primary;
+    font-weight: $font-weight-400;
+    color: $black;
+    background-image: url("../images/background.webp");
+    background-size: 100%;
+    background-repeat: no-repeat;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+// Контейнер
 .container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 $container-padding;
+    max-width: $container-max-width;
+    margin: 0 auto;
+    padding: 0 $container-padding;
+
+    @include mobile-only {
+        padding: 0 $spacing-md;
+    }
+
+    @include tablet {
+        padding: 0 $spacing-xl;
+    }
 }
 
+// Скрытые элементы
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+// Изображения
 img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+// Ссылки
+a {
+    text-decoration: none;
+    color: inherit;
+    @include transition(color);
+
+    &:hover {
+        color: $primary-gray;
+    }
+}
+
+// Списки
+ul,
+ol {
+    list-style: none;
 }

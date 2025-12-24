@@ -1,0 +1,32 @@
+.header {
+    padding: 44px 0 85px;
+    background-color: $white;
+    @include flex-center;
+
+    @include mobile-only {
+        padding: $spacing-md 0;
+    }
+
+
+
+    &__title {
+        @include font-h1;
+        color: $primary-gray;
+        margin: 0;
+
+        @include mobile-only {
+            font-size: 24px;
+        }
+    }
+
+    &__subtitle {
+        @include font-h6;
+        color: $primary-gray;
+        margin: 0;
+        text-align: center;
+
+        @include mobile-only {
+            font-size: 14px;
+        }
+    }
+}

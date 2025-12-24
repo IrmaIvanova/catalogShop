@@ -1,60 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru" class="page">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Catalog Shop | Online Courses</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
 </head>
+
 <body class="page__body">
-    
+
     <!-- Header -->
     <header class="header">
-        <div class="container">
-            <div class="header__logo">
-                <h1 class="header__title">ENJOY YOUR STORING!</h1>
-                <p class="header__subtitle">Our online courses</p>
+            <div class="header__inner">
+                <h6 class="header__subtitle">ENJOY YOUR STORING!</h6>
+                <h1 class="header__title">Our online courses</hq>
             </div>
-        </div>
     </header>
 
     <!-- Main Content -->
     <main class="main">
         <div class="container">
-            
-            <!-- Search Section -->
-            <section class="search">
-                <input type="text" 
-                       class="search__input" 
-                       placeholder="Search courses..."
-                       aria-label="Search courses">
-                <button class="search__button" aria-label="Search">
-                    <svg class="search__icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z" 
-                              stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                </button>
-            </section>
+
+
 
             <!-- Filters -->
             <section class="filters">
-                <div class="filters__categories">
-                    <h2 class="filters__title">Categories</h2>
-                    <div class="filters__list">
-                        <!-- Категории будут добавлены через JS -->
-                    </div>
+                <div class="filters__list" id="filtersList">
+                    <!-- Кнопки будут добавлены через JS -->
+                </div>
+                <div class="search__wrapper">
+                    <input type="text" class="search__input" placeholder="Search courses..." aria-label="Search courses"
+                        id="searchInput">
+                    <button class="search__button" aria-label="Search">
+                        <svg class="search__icon" width="20" height="20" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M19 19L13 13M15 8C15 11.866 11.866 15 8 15C4.13401 15 1 11.866 1 8C1 4.13401 4.13401 1 8 1C11.866 1 15 4.13401 15 8Z"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </button>
                 </div>
             </section>
+
+         
 
             <!-- Courses Grid -->
             <section class="courses">
                 <h2 class="courses__title visually-hidden">Available Courses</h2>
-                <div class="courses__grid" id="courses-grid">
+                <div class="courses__grid" id="coursesGrid">
                     <!-- Карточки будут добавлены через JS -->
+                </div>
+                <div class="courses__empty hidden" id="noResults">
+                    No courses found matching your criteria
                 </div>
             </section>
 
@@ -70,4 +76,5 @@
 
     <script src="js/app.js"></script>
 </body>
+
 </html>

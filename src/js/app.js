@@ -21,7 +21,7 @@ const coursesData = [
         title: "HR Management and Analytics",
         price: 200,
         instructor: "Leslie Alexander",
-        category: "HR & Running",
+        category: "HR & Recruting",
         image: "course3.png"
     },
     {
@@ -61,7 +61,7 @@ const coursesData = [
         title: "Human Resources – Selection and Recruitment",
         price: 150,
         instructor: "Kathryn Murphy",
-        category: "HR & Running",
+        category: "HR & Recruting",
         image: "course8.png"
     },
     {
@@ -79,7 +79,7 @@ const categories = [
     "All",
     "Marketing",
     "Management",
-    "HR & Running",
+    "HR & Recruting",
     "Design",
     "Development"
 ];
@@ -98,32 +98,56 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Инициализация категорий
 function initCategories() {
-    categories.forEach(category => {
+    const filtersList = document.getElementById('filtersList');
+
+    categories.forEach((category, index) => {
         const button = document.createElement('button');
-        button.className = 'filter__button';
+        button.className = index === 0 ? 'filter__button filter__button--active' : 'filter__button';
         button.textContent = category;
         button.dataset.category = category;
+        button.type = 'button';
+        button.setAttribute('aria-label', `Filter by ${category}`);
         filtersList.appendChild(button);
     });
 }
-
 // Рендер карточек курсов
 function renderCourses(courses) {
+    const coursesGrid = document.getElementById('coursesGrid');
+    const noResults = document.getElementById('noResults');
+
     coursesGrid.innerHTML = '';
-    
+
+    if (courses.length === 0) {
+        noResults.classList.remove('hidden');
+        return;
+    }
+
+    noResults.classList.add('hidden');
+
     courses.forEach(course => {
         const card = document.createElement('article');
-        card.className = 'course-card';
+        card.className = 'course-card fade-in';
+
+        // Используем placeholder изображение если нет реального
+        const imageUrl = course.image ? `images/${course.image}` : `https://picsum.photos/400/200?random=${course.id}`;
+
+        const className = course.category
+            .toLowerCase()               // в нижний регистр
+            .replace(/\s+/g, '')        // пробелы на дефисы
+
         card.innerHTML = `
             <div class="course-card__image">
-                <img src="images/${course.image}" alt="${course.title}">
+                <img src="${imageUrl}" alt="${course.title}" loading="lazy">
             </div>
             <div class="course-card__content">
+             <span class="course-card__category course-card__category--${className.includes("hr") ? "hr" : className}">${course.category}</span>
                 <h3 class="course-card__title">${course.title}</h3>
-                <p class="course-card__instructor">by ${course.instructor}</p>
+ 
                 <div class="course-card__footer">
                     <span class="course-card__price">$${course.price}</span>
-                    <span class="course-card__category">${course.category}</span>
+                    <span class="course-card__divider"></span>
+                    <p class="course-card__instructor">by ${course.instructor}</p>
+                   
                 </div>
             </div>
         `;
@@ -135,22 +159,43 @@ function renderCourses(courses) {
 function setupEventListeners() {
     // Фильтрация по категориям
     document.querySelectorAll('.filter__button').forEach(button => {
-        button.addEventListener('click', () => {
-            const category = button.dataset.category;
+        button.addEventListener('click', function () {
+            const category = this.dataset.category;
             filterCourses(category);
-            
-            // Активный класс
+
+            // Удаляем активный класс у всех кнопок
             document.querySelectorAll('.filter__button').forEach(btn => {
                 btn.classList.remove('filter__button--active');
             });
-            button.classList.add('filter__button--active');
+
+            // Добавляем активный класс нажатой кнопке
+            this.classList.add('filter__button--active');
+
+            // Сбрасываем поиск если есть
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput) {
+                searchInput.value = '';
+            }
         });
     });
 
-    // Поиск
+    // Поиск с debounce
+    const searchInput = document.getElementById('searchInput');
+    let searchTimeout;
+
     searchInput.addEventListener('input', (e) => {
-        const searchTerm = e.target.value.toLowerCase();
-        searchCourses(searchTerm);
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            const searchTerm = e.target.value.trim().toLowerCase();
+            searchCourses(searchTerm);
+
+            // Сбрасываем активную категорию при поиске
+            document.querySelectorAll('.filter__button').forEach(btn => {
+                btn.classList.remove('filter__button--active');
+            });
+            // Активируем кнопку "All"
+            document.querySelector('.filter__button[data-category="All"]')?.classList.add('filter__button--active');
+        }, 300);
     });
 }
 
@@ -160,14 +205,14 @@ function filterCourses(category) {
         renderCourses(coursesData);
         return;
     }
-    
+
     const filtered = coursesData.filter(course => course.category === category);
     renderCourses(filtered);
 }
 
 // Поиск курсов
 function searchCourses(term) {
-    const filtered = coursesData.filter(course => 
+    const filtered = coursesData.filter(course =>
         course.title.toLowerCase().includes(term) ||
         course.instructor.toLowerCase().includes(term) ||
         course.category.toLowerCase().includes(term)
