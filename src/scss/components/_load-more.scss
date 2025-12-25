@@ -1,0 +1,26 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+
+.load-more {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 80px auto 86px;
+  padding: 12px 24px;
+  @include font-h6;
+  color: $gray-text;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color .2s ease;
+
+  &:hover {
+    color: $primary-gray;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+}

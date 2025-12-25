@@ -1,30 +1,102 @@
-import { coursesData, categories } from './courses-data.js'
+// Данные курсов (из вашего текста)
+const coursesData = [
+    {
+        id: 1,
+        title: "The Ultimate Google Ads Training Course",
+        price: 100,
+        instructor: "Jerome Bell",
+        category: "Marketing",
+        image: "course1.webp"
+    },
+    {
+        id: 2,
+        title: "Project Management Fundamentals",
+        price: 400,
+        instructor: "Miriam McGoney",
+        category: "Management",
+        image: "course2.webp"
+    },
+    {
+        id: 3,
+        title: "HR Management and Analytics",
+        price: 200,
+        instructor: "Leslie Alexander",
+        category: "HR & Recruting",
+        image: "course3.webp"
+    },
+    {
+        id: 4,
+        title: "Brand Management & PR Communications",
+        price: 250,
+        instructor: "Kristin Watson",
+        category: "Marketing",
+        image: "course4.webp"
+    },
+    {
+        id: 5,
+        title: "Graphic Design Basic",
+        price: 600,
+        instructor: "Guy Hawkins",
+        category: "Design",
+        image: "course5.webp"
+    },
+    {
+        id: 6,
+        title: "Business Development Management",
+        price: 400,
+        instructor: "Diane Russell",
+        category: "Management",
+        image: "course6.webp"
+    },
+    {
+        id: 7,
+        title: "Highload Software Architecture",
+        price: 400,
+        instructor: "Brooklyn Stirnman",
+        category: "Development",
+        image: "course7.webp"
+    },
+    {
+        id: 8,
+        title: "Human Resources – Selection and Recruitment",
+        price: 150,
+        instructor: "Kathryn Murphy",
+        category: "HR & Recruting",
+        image: "course8.webp"
+    },
+    {
+        id: 9,
+        title: "User Experience: Human-centered Design",
+        price: 240,
+        instructor: "Cody Flover",
+        category: "Design",
+        image: "course9.webp"
+    }
+];
+
+// Категории из макета
+const categories = [
+    "All",
+    "Marketing",
+    "Management",
+    "HR & Recruting",
+    "Design",
+    "Development"
+];
 
 // DOM элементы
 let coursesGrid = document.getElementById('courses-grid');
 let filtersList = document.querySelector('.filters__list');
 let searchInput = document.querySelector('.search__input');
 let categoryCounts = {};
-const LOAD_STEP = 6;
-let visibleCount = LOAD_STEP;
-let currentCourses = [...coursesData];
-
-const loadMoreBtn = document.querySelector('.load-more');
-
-loadMoreBtn?.addEventListener('click', () => {
-    renderCoursesAppend();
-});
-
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', () => {
     initCategories();
-    currentCourses = [...coursesData];
-    renderCoursesInitial(currentCourses);
+    renderCourses(coursesData);
     setupEventListeners();
 });
 
 
-// функция вычесляющая сколько у каждой категории курсов
 function calculateCategoryCounts() {
     // Инициализируем объект с нулями
     categoryCounts = {};
@@ -41,9 +113,8 @@ function calculateCategoryCounts() {
         }
     });
 }
-
+   
 calculateCategoryCounts()
-
 // Инициализация категорий
 function initCategories() {
     const filtersList = document.getElementById('filtersList');
@@ -68,48 +139,9 @@ function initCategories() {
     });
 }
 
-function updateLoadMoreButton(totalCount) {
-    if (!loadMoreBtn) return;
 
-    loadMoreBtn.style.display =
-        visibleCount >= totalCount ? 'none' : 'flex';
-}
-
-//  рендер карточки
-function createCourseCard(course) {
-    const card = document.createElement('article');
-    card.className = 'course-card fade-in';
-
-    const imageUrl = course.image
-        ? `images/${course.image}`
-        : `https://picsum.photos/400/200?random=${course.id}`;
-
-    const className = course.category
-        .toLowerCase()
-        .replace(/\s+/g, '');
-
-    card.innerHTML = `
-        <div class="course-card__image">
-            <img src="${imageUrl}" alt="${course.title}" loading="lazy">
-        </div>
-        <div class="course-card__content">
-            <span class="course-card__category course-card__category--${className.includes("hr") ? "hr" : className}">
-                ${course.category}
-            </span>
-            <h3 class="course-card__title">${course.title}</h3>
-            <div class="course-card__footer">
-                <span class="course-card__price">$${course.price}</span>
-                <span class="course-card__divider"></span>
-                <p class="course-card__instructor">by ${course.instructor}</p>
-            </div>
-        </div>
-    `;
-
-    return card;
-}
-
-// Первый рендер курсов (полная перерисовка) при загрузке/при фильтра/при поиске
-function renderCoursesInitial(courses) {
+// Рендер карточек курсов
+function renderCourses(courses) {
     const coursesGrid = document.getElementById('coursesGrid');
     const noResults = document.getElementById('noResults');
 
@@ -117,55 +149,41 @@ function renderCoursesInitial(courses) {
 
     if (courses.length === 0) {
         noResults.classList.remove('hidden');
-        loadMoreBtn.style.display = 'none';
         return;
     }
 
     noResults.classList.add('hidden');
 
-    const initialCourses = courses.slice(0, visibleCount);
+    courses.forEach(course => {
+        const card = document.createElement('article');
+        card.className = 'course-card fade-in';
 
-    initialCourses.forEach(course => {
-        coursesGrid.appendChild(createCourseCard(course));
-    });
+        // Используем placeholder изображение если нет реального
+        const imageUrl = course.image ? `images/${course.image}` : `https://picsum.photos/400/200?random=${course.id}`;
 
-    updateLoadMoreButton(courses.length);
-}
+        const className = course.category
+            .toLowerCase()               // в нижний регистр
+            .replace(/\s+/g, '')        // пробелы на дефисы
 
-// рендер курсов по Load more — добавляем только новые
-function renderCoursesAppend() {
-    const coursesGrid = document.getElementById('coursesGrid');
-
-    const startIndex = coursesGrid.children.length;
-    const nextCourses = currentCourses.slice(
-        startIndex,
-        startIndex + LOAD_STEP
-    );
-
-    if (nextCourses.length === 0) return;
-
-    let firstNewCard = null;
-
-    nextCourses.forEach((course, index) => {
-        const card = createCourseCard(course);
+        card.innerHTML = `
+            <div class="course-card__image">
+                <img src="${imageUrl}" alt="${course.title}" loading="lazy">
+            </div>
+            <div class="course-card__content">
+             <span class="course-card__category course-card__category--${className.includes("hr") ? "hr" : className}">${course.category}</span>
+                <h3 class="course-card__title">${course.title}</h3>
+ 
+                <div class="course-card__footer">
+                    <span class="course-card__price">$${course.price}</span>
+                    <span class="course-card__divider"></span>
+                    <p class="course-card__instructor">by ${course.instructor}</p>
+                   
+                </div>
+            </div>
+        `;
         coursesGrid.appendChild(card);
-
-        if (index === 0) {
-            firstNewCard = card;
-        }
     });
-
-    visibleCount += LOAD_STEP;
-    updateLoadMoreButton(currentCourses.length);
-
-    // 🔽 Smooth scroll к первой добавленной карточке
-    firstNewCard?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
-    });
-
 }
-
 
 // Настройка обработчиков событий
 function setupEventListeners() {
@@ -211,28 +229,23 @@ function setupEventListeners() {
     });
 }
 
-
 // Фильтрация курсов
 function filterCourses(category) {
-    visibleCount = LOAD_STEP;
+    if (category === 'All') {
+        renderCourses(coursesData);
+        return;
+    }
 
-    currentCourses =
-        category === 'All'
-            ? [...coursesData]
-            : coursesData.filter(c => c.category === category);
-
-    renderCoursesInitial(currentCourses);
+    const filtered = coursesData.filter(course => course.category === category);
+    renderCourses(filtered);
 }
 
 // Поиск курсов
 function searchCourses(term) {
-    visibleCount = LOAD_STEP;
-
-    currentCourses = coursesData.filter(course =>
+    const filtered = coursesData.filter(course =>
         course.title.toLowerCase().includes(term) ||
         course.instructor.toLowerCase().includes(term) ||
         course.category.toLowerCase().includes(term)
     );
-
-    renderCoursesInitial(currentCourses);
+    renderCourses(filtered);
 }
